@@ -5,42 +5,38 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public static PlayerController player;
-
 	public Spot currentRobotSpot;
+	public float secondsBetweenMoves = 1f;
 
-	void Start()
-	{
-		player = this;
-	}
+	void Start(){ player = this; }
 
 	void Update () {
 
-		if (Input.GetKeyUp (KeyCode.Space))
+		if (Input.GetKeyUp (KeyCode.Space)) {
 			MakeNextMove ();
+		}
+
+		if (Input.GetMouseButtonDown (1))
+			StartCoroutine (StartTraversing());
 	}
 
+	//TYLKO TO NIEJASNE
 	public void MakeNextMove(){
 
 		if (currentRobotSpot == DStar._this.goal)
 			return;
 
-		//if next spot is a obstacle
-		//if (currentRobotSpot.b != null && currentRobotSpot.b.cost > 10f)
-			//DStar._this.OnMapModified (currentRobotSpot.b);
-
-		//TODO jeszcze przed ruchem trzeba uruchomić ten PathController
+		//SimpleMap.map.ActualizeVisibleFragment ();
 
 		GetComponent<PathController> ().CheckSurroundings ();
 
 		currentRobotSpot = currentRobotSpot.b;
 		MoveToSpot (currentRobotSpot);
 
-		//GetComponent<PathController> ().CheckSurroundings ();
-		//GetComponent<PathController> ().SetCostPath ();
-		//GetComponent<PathController> ().CheckSurroundings ();
-		GetComponent<PathController> ().SetCostPath ();
-		GetComponent<PathController> ().ChangeIlluminatedFragment ();
+		DStar._this.SaveActualizedPath();
+		GetComponent<PathController> ().ShowPath ();
 
+		SimpleMap.map.ActualizeVisibleFragment ();
 	}
 
 	void MoveToSpot(Spot spot){
@@ -52,4 +48,14 @@ public class PlayerController : MonoBehaviour {
 		currentRobotSpot = DStar._this.start;
 	}
 
+	IEnumerator StartTraversing(){
+		yield return new WaitForSeconds (secondsBetweenMoves);
+		if (Input.GetMouseButton (1)) {
+
+			//move robot
+			MakeNextMove();
+
+			StartCoroutine (StartTraversing ());
+		}
+	}
 }

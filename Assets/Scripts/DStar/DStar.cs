@@ -8,10 +8,6 @@ public class DStar : MonoBehaviour {
 
 	public List<Spot> OPENSet, CLOSEDSet, path;
 
-	List<GameObject> pathElements;
-	public GameObject pathElPrefab;
-	public Transform PATHObjects;
-
 	[HideInInspector]
 	public Spot start, goal;
 
@@ -20,8 +16,6 @@ public class DStar : MonoBehaviour {
 		OPENSet = new List<Spot> ();
 		CLOSEDSet = new List<Spot> ();
 		path = new List<Spot> ();
-
-		pathElements = new List<GameObject> ();
 	}
 
 	void Update () {
@@ -29,10 +23,10 @@ public class DStar : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.F1)) {
 			SetStartAndGoal ();
 			SimpleMap.map.SetSpotsColor ();
-			RunDStar();
 			PlayerController.player.SetPlayerOnStartPoint ();
-			PlayerController.player.GetComponent<PathController> ().SetCostPath ();
-			PlayerController.player.GetComponent<PathController> ().ChangeIlluminatedFragment ();
+			SimpleMap.map.ActualizeVisibleFragment ();
+			RunDStar();
+			PlayerController.player.GetComponent<PathController> ().ShowPath ();
 		}
 
 		if (Input.GetKeyDown (KeyCode.F2))
@@ -57,42 +51,22 @@ public class DStar : MonoBehaviour {
 		CLOSEDSet.Clear ();
 		path.Clear ();
 
-		foreach(GameObject pathEl in pathElements){
-			Destroy (pathEl);
-		}
-		pathElements.Clear ();
+		PlayerController.player.GetComponent<PathController> ().Reset ();
 
 		SetStartAndGoal ();		//if there is other method of choosing these spots
 	}
 
-	void SaveAndShowPath (Spot robotPos = null){
+	public void SaveActualizedPath (){
 		
 		path.Clear ();
 
-		//TEST
-		foreach(GameObject pathEl in pathElements){
-			Destroy (pathEl);
-		}
-		pathElements.Clear ();
+		if (PlayerController.player.currentRobotSpot.b == null)
+			return;
 
-		if (robotPos != null)
-			path.Add (robotPos);
-		else path.Add (start);
-
-		Spot currentSpot = path[0].b;
+		Spot currentSpot = PlayerController.player.currentRobotSpot.b;
 
 		while (currentSpot != goal) {
 			path.Add (currentSpot);
-
-			//if(currentSpot.cost < 10)
-				//currentSpot.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.green);
-			//else currentSpot.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.cyan);
-			//TODO dodawać pathElementy
-
-			GameObject pathEl = (GameObject)Instantiate (pathElPrefab, new Vector3 (currentSpot.transform.position.x, currentSpot.transform.position.y + 0.02f, currentSpot.transform.position.z), Quaternion.identity);
-			pathEl.transform.parent = PATHObjects;
-			pathElements.Add (pathEl);
-
 			currentSpot = currentSpot.b;
 		}
 
@@ -112,7 +86,7 @@ public class DStar : MonoBehaviour {
 			kmin = ProcessState();
 		} while(start.t != Spot.State.CLOSED && kmin != -1f);
 
-		SaveAndShowPath();
+		SaveActualizedPath();
 	}
 
 	float ProcessState(){
@@ -226,8 +200,8 @@ public class DStar : MonoBehaviour {
 	}
 
 	public void OnMapModified(Spot modified){
-
-		Spot robotPos = PlayerController.player.currentRobotSpot;
+		//TODO odkomentarzować
+		//Spot robotPos = PlayerController.player.currentRobotSpot;
 
 		ModifyCost (modified, 1000f);
 
@@ -238,7 +212,8 @@ public class DStar : MonoBehaviour {
 		} while(modified.k < modified.h && kmin != -1f);
 
 		SimpleMap.map.SetSpotsColor ();
-		SaveAndShowPath(robotPos);
+		//TODO odkomentarzować
+		//SaveAndShowPath(robotPos);
 
 	}
 
