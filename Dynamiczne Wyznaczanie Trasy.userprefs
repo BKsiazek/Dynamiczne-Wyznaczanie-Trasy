@@ -2,10 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PathController.cs">
     <Files>
-      <File FileName="Assets\Scripts\Map\Environment.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Map\Spot.cs" Line="38" Column="3" />
-      <File FileName="Assets\Scripts\Map\SimpleMap.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PathController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DStar\DStar.cs" Line="33" Column="4" />
+      <File FileName="Assets\Scripts\PathController.cs" Line="13" Column="38" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="39" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

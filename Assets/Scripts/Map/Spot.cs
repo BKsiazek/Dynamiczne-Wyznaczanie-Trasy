@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spot : MonoBehaviour {
 	
-	public int x, y;	//TODO maybe unnecessary (check it later)
+	public int x, y;
 
 	public float cost;
 	public float h;
@@ -20,15 +20,8 @@ public class Spot : MonoBehaviour {
 	}
 
 	public void SetColor(){
-
-		/*if (cost > 900f)	//obstacle
-			GetComponent<MeshRenderer> ().material.SetColor ("_Color", Color.black);
-		else if (cost > 500f)
-			GetComponent<MeshRenderer> ().material.SetColor ("_Color", new Color32 (158, 158, 158, 255));
-		else if (cost > 200f)
-			GetComponent<MeshRenderer> ().material.SetColor ("_Color", new Color32 (201, 201, 201, 255));
-		else
-			GetComponent<MeshRenderer> ().material.SetColor ("_Color", Color.white);*/
+		//TODO tutaj ustawić te kolory
+		//pewnie dodać materiał do prefaba itd
 
 		if(cost > 10f)
 			GetComponent<MeshRenderer> ().material.SetColor ("_Color", Color.black);

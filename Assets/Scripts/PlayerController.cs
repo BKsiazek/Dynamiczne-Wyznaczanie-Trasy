@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour {
 	public Spot currentRobotSpot;
 	public float secondsBetweenMoves = 1f;
 
-	void Start(){ player = this; }
+	void Start(){
+		player = this;
+	}
 
 	void Update () {
 
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 			StartCoroutine (StartTraversing());
 	}
 
-	//TYLKO TO NIEJASNE
+	//TODO TYLKO TO NIEJASNE
 	public void MakeNextMove(){
 
 		if (currentRobotSpot == DStar._this.goal)
@@ -51,10 +53,7 @@ public class PlayerController : MonoBehaviour {
 	IEnumerator StartTraversing(){
 		yield return new WaitForSeconds (secondsBetweenMoves);
 		if (Input.GetMouseButton (1)) {
-
-			//move robot
 			MakeNextMove();
-
 			StartCoroutine (StartTraversing ());
 		}
 	}

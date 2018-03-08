@@ -8,9 +8,12 @@ public static class MeshBuilder{
 	static List<int> triangles;
 	static List<Vector2> uvs;
 
-	public static void BuildMesh(Chunk chunk)
+	public static void BuildMesh(Environment environment)
 	{
-		InitializeSquares (chunk.values, chunk.chunkPosition);
+		//Remove old mesh if exists
+		GameObject.Destroy (environment.GetComponent<MeshFilter> ().sharedMesh);
+
+		InitializeSquares (environment.values);
 
 		vertices = new List<Vector3> ();
 		triangles = new List<int> ();
@@ -30,19 +33,20 @@ public static class MeshBuilder{
 		mesh.triangles = triangles.ToArray ();
 		mesh.RecalculateNormals ();
 
-		chunk.GetComponent<MeshFilter> ().mesh = mesh;
-		chunk.GetComponent<MeshCollider> ().sharedMesh = mesh;
+		environment.GetComponent<MeshFilter> ().sharedMesh = mesh;
+		environment.GetComponent<MeshCollider> ().sharedMesh = mesh;
+
 	}
 
-	static void InitializeSquares(TerrainType[,] values, Vector3 chunkPosition)
+	static void InitializeSquares(TerrainType[,] values)
 	{
-		Vector3 positionOffset = new Vector3 (-(MapBuilder._instance.chunkXSize / 2f), 0f, -(MapBuilder._instance.chunkZSize / 2f) + 1f);
+		Vector3 positionOffset = new Vector3 (-(Environment.env.xSize / 2f), 0f, -(Environment.env.zSize / 2f) + 1f);
 
-		squares = new Square[MapBuilder._instance.chunkXSize, MapBuilder._instance.chunkZSize];
+		squares = new Square[Environment.env.xSize, Environment.env.zSize];
 
 		for (int x = 0; x < squares.GetLength(0); x++) {
 			for (int z = 0; z < squares.GetLength(1); z++) {
-				Vector3 squareBottomLeftPos = new Vector3 (/*chunkPosition.x + */x, chunkPosition.y, /*chunkPosition.z + */z) + positionOffset;
+				Vector3 squareBottomLeftPos = new Vector3 (x, 0f, z) + positionOffset;
 				squares [x, z] = new Square (squareBottomLeftPos, values [x, z]);
 			}
 		}
@@ -102,10 +106,10 @@ public static class MeshBuilder{
 		}
 
 		if (tileX > -1) {
-			float umin = MapBuilder._instance.coordInTileTexture * tileX;
-			float umax = MapBuilder._instance.coordInTileTexture * (tileX + 1);
-			float vmin = MapBuilder._instance.coordInTileTexture * tileY;
-			float vmax = MapBuilder._instance.coordInTileTexture * (tileY + 1);
+			float umin = Environment.env.coordInTileTexture * tileX;
+			float umax = Environment.env.coordInTileTexture * (tileX + 1);
+			float vmin = Environment.env.coordInTileTexture * tileY;
+			float vmax = Environment.env.coordInTileTexture * (tileY + 1);
 
 			uvs.Add (new Vector2 (umin, vmax));
 			uvs.Add (new Vector2 (umax, vmin));

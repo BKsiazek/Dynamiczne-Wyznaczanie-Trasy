@@ -13,9 +13,7 @@ public class ActiveWindow : MonoBehaviour {
 
 	void Update () {
 
-		if (Input.GetKeyUp (KeyCode.K))
-			SetLineRenderer ();
-
+		//TODO nie w Update(), tylko po każdym ruchu postaci
 		if (PlayerController.player != null) {
 			SetLineRenderer ();
 			transform.position = PlayerController.player.transform.position;
@@ -24,7 +22,7 @@ public class ActiveWindow : MonoBehaviour {
 	}
 
 	void SetLineRenderer(){
-		//set vertices
+		
 		int range = SimpleMap.map.range;
 		Vector3[] points = new Vector3[5];
 
@@ -35,8 +33,5 @@ public class ActiveWindow : MonoBehaviour {
 		points [4] = new Vector3 (-range - 0.57f, lineHeight, -range - 0.5f);
 
 		lineRend.SetPositions (points);
-
-		//enable component
-		//lineRend.enabled = true;
 	}
 }

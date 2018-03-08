@@ -9,10 +9,9 @@ public class TEST : MonoBehaviour {
 	void Update () {
 		MakeItScroll ();
 
-//		if (Input.GetKeyDown (KeyCode.Space)) {
-//			MapBuilder._instance.ClearAll ();
-//			MapBuilder._instance.BuildTheMap (Vector3.zero);
-//		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			Environment.env.BuildTheMap ();
+		}
 
 	}
 
@@ -22,32 +21,6 @@ public class TEST : MonoBehaviour {
 		Camera.main.fieldOfView = fov;
 	}
 
-	//Old map
-	/*
-	public Vector3 cameraOffset;
-
-	void Start () {
-		
-	}
-
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			MapBuilder._instance.ClearAll ();
-			MapBuilder._instance.BuildTheMap (Vector3.zero);
-		}
-
-		CameraMove ();
-	}
-
-	void CameraMove()
-	{
-		Camera.main.transform.position = PlayerController.player.transform.position + cameraOffset;
-	}
-	 */
-
-
 	//TODO poprawne działanie przy zamknięciu dookoła
 	//TODO jakieś to aktywne okno chyba, żeby się dało zrobić te różne rodzaje terenu
-	//TODO zrobić różne rodzaje terenu
-	//TODO najpierw na wprost
 }

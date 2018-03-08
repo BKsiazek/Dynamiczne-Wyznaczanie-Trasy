@@ -46,23 +46,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ActiveWindow.cs" />
+     <Compile Include="Assets\Scripts\ActiveWindow.cs" />
      <Compile Include="Assets\Scripts\DStar\DStar.cs" />
-     <Compile Include="Assets\Scripts\Map\Environment.cs" />
-     <Compile Include="Assets\Scripts\Map\ObstacleCreator.cs" />
+     <Compile Include="Assets\Scripts\Environment\Environment.cs" />
+     <Compile Include="Assets\Scripts\Environment\MeshBuilder.cs" />
+     <Compile Include="Assets\Scripts\Environment\Node.cs" />
+     <Compile Include="Assets\Scripts\Environment\Square.cs" />
+     <Compile Include="Assets\Scripts\Environment\TerrainType.cs" />
      <Compile Include="Assets\Scripts\Map\SimpleMap.cs" />
      <Compile Include="Assets\Scripts\Map\Spot.cs" />
      <Compile Include="Assets\Scripts\PathController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\TEST.cs" />
      <Compile Include="Assets\Scripts\UNUSED FOR NOW\AStar.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\Chunk.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\MapBuilder.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\MeshBuilder.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\Node.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\Square.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\TerrainType.cs" />
-     <Compile Include="Assets\Scripts\UNUSED FOR NOW\Trigger.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Unity3D/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
