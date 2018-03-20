@@ -23,7 +23,7 @@ public class ActiveWindow : MonoBehaviour {
 
 	void SetLineRenderer(){
 		
-		int range = SimpleMap.map.range;
+		int range = PlayerController.player.pathCtrl.range;
 		Vector3[] points = new Vector3[5];
 
 		points [0] = new Vector3 (-range - 0.5f, lineHeight, -range - 0.5f);

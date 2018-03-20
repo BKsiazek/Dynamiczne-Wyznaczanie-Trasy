@@ -1,10 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PathController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Environment\TerrainType.cs">
     <Files>
-      <File FileName="Assets\Scripts\DStar\DStar.cs" Line="33" Column="4" />
-      <File FileName="Assets\Scripts\PathController.cs" Line="13" Column="38" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="39" Column="16" />
+      <File FileName="Assets\Scripts\DStar\DStar.cs" Line="212" Column="17" />
+      <File FileName="Assets\Scripts\PathController.cs" Line="61" Column="9" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="41" Column="32" />
+      <File FileName="Assets\Scripts\Map\Spot.cs" Line="59" Column="77" />
+      <File FileName="Assets\Scripts\Map\SimpleMap.cs" Line="65" Column="3" />
+      <File FileName="Assets\Scripts\ActiveWindow.cs" Line="26" Column="54" />
+      <File FileName="Assets\Scripts\Environment\Environment.cs" Line="67" Column="4" />
+      <File FileName="Assets\Scripts\Environment\TerrainType.cs" Line="6" Column="62" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

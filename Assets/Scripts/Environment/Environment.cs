@@ -17,10 +17,6 @@ public class Environment : MonoBehaviour {
 	public float noiseXOffset = 1f;
 	public float noiseZOffset = 1f;
 
-	//TEST OLD może do wyrzucenia
-	[Range(0f, 0.5f)]
-	public float water;
-
 	void Start () {
 		env = this;
 		BuildTheMap ();
@@ -32,7 +28,7 @@ public class Environment : MonoBehaviour {
 		values = new TerrainType[xSize, zSize];
 		GeneratePerlinNoiseValues ();
 		MeshBuilder.BuildMesh (this);
-		transform.position += new Vector3 (0f, -0.3f, 0f);
+		transform.position = new Vector3 (0f, -0.3f, 0f);
 	}
 
 	public void GeneratePerlinNoiseValues()
@@ -65,22 +61,10 @@ public class Environment : MonoBehaviour {
 			typeOfTerrain = TerrainType.mountainMedium;
 		else typeOfTerrain = TerrainType.mountainHigh;*/
 
-//		if(noiseValue < (0.66f * MapBuilder._instance.water))
-//			typeOfTerrain = TerrainType.waterDeep;
-//		else if(noiseValue < MapBuilder._instance.water)
-//			typeOfTerrain = TerrainType.waterShallow;
-//		else if(noiseValue < 0.6f)
-//			typeOfTerrain = TerrainType.grass;
-//		else if (noiseValue < 0.7f)
-//			typeOfTerrain = TerrainType.mountainLow;
-//		else if (noiseValue < 0.85f)
-//			typeOfTerrain = TerrainType.mountainMedium;
-//		else typeOfTerrain = TerrainType.mountainHigh;
-
 		if(noiseValue < 0.6f)
 			typeOfTerrain = TerrainType.grass;
-		//else if(noiseValue < 0.7f)
-			//typeOfTerrain = TerrainType.mountainLow;
+		else if(noiseValue < 0.7f)
+			typeOfTerrain = TerrainType.mountainLow;
 		else typeOfTerrain = TerrainType.mountainHigh;
 
 		return typeOfTerrain;

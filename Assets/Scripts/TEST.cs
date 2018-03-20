@@ -9,7 +9,7 @@ public class TEST : MonoBehaviour {
 	void Update () {
 		MakeItScroll ();
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.M)) {
 			Environment.env.BuildTheMap ();
 		}
 

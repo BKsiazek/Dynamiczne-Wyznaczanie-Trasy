@@ -5,8 +5,7 @@ using UnityEngine;
 public class PathController : MonoBehaviour {
 
 	[Range(1, 15)]
-	public int spotsRange = 1;
-	public float minCost;
+	public int range = 1;
 
 	//Visible Path
 	public List<GameObject> visiblePath;
@@ -17,45 +16,92 @@ public class PathController : MonoBehaviour {
 		visiblePath = new List<GameObject> ();
 	}
 
-	//jeśli pole na końcu zasięgu ma wysoki koszt to wywołuje DStar
-	public void CheckSurroundings(){
-		if (DStar._this.path.Count > spotsRange - 1) {
-			if (DStar._this.path [spotsRange - 1].cost > minCost)
-				DStar._this.OnMapModified (DStar._this.path [spotsRange - 1]);
-		}
-	}
-
 	public void ShowPath(){
 
-		foreach(GameObject pathEl in visiblePath){
-			Destroy (pathEl);
-		}
-		visiblePath.Clear ();
+		DestroyPath ();
 
-		foreach(Spot spotFromPath in DStar._this.path){
+		foreach(Spot spotFromPath in DStar._this.path) {
 
-			GameObject pathEl = (GameObject)Instantiate (visiblePathPrefab, new Vector3 (spotFromPath.transform.position.x, spotFromPath.transform.position.y + 0.02f, spotFromPath.transform.position.z), Quaternion.identity);
+			GameObject pathEl = (GameObject)Instantiate (
+					visiblePathPrefab, 
+					new Vector3 (
+							spotFromPath.transform.position.x, 
+							spotFromPath.transform.position.y + 0.02f, 
+							spotFromPath.transform.position.z
+							),
+					Quaternion.identity
+				);
 
 			pathEl.transform.parent = PATHObjects;
 			visiblePath.Add (pathEl);
 		}
-
-		ShowRangeOnPath ();
 	}
 
-	//podświetla te kółka trasy, które są w zasięgu sprawdzania
-	void ShowRangeOnPath(){
-		for (int i = 0; i < spotsRange; i++) {
-			if(visiblePath.Count >= (i+1))
-				visiblePath [i].GetComponent<MeshRenderer> ().material.SetColor ("_Color", Color.red);
-		}
-	}
-
-	public void Reset(){
+	public void DestroyPath(){
 		
 		foreach(GameObject pathEl in visiblePath){
 			Destroy (pathEl);
 		}
 		visiblePath.Clear ();
+	}
+
+
+
+
+
+
+
+
+	public void CheckSurroundings(){
+
+		List<Spot> spotsToModify = GetSpotsToModify (GetVisibleSpots ());
+
+		foreach (Spot spot in spotsToModify) {
+			DStar._this.OnMapModified (spot);
+			spot.SetColor ();
+		}
+	}
+
+	List<Spot> GetVisibleSpots(){
+
+		List<Spot> visibleSpots = new List<Spot>();
+
+		int firstPosX = PlayerController.player.currentRobotSpot.x - range;
+		int firstPosY = PlayerController.player.currentRobotSpot.y - range;
+		int lastPosX = firstPosX + (2 * range);
+		int lastPosY = firstPosY + (2 * range);
+
+		for (int x = firstPosX; x <= lastPosX; x++) {
+			for (int y = firstPosY; y <= lastPosY; y++) {
+				if (x >= 0 && x < Environment.env.xSize && y >= 0 && y < Environment.env.zSize) {
+					visibleSpots.Add (SimpleMap.map.spots[x, y]);
+				}
+			}
+		}
+
+		return visibleSpots;
+	}
+		
+	List<Spot> GetSpotsToModify(List<Spot> visibleSpots){
+
+		List<Spot> spotsToModify = new List<Spot> ();
+
+		foreach (Spot spot in visibleSpots) {
+			if (spot.cost != Environment.env.values [spot.x, spot.y].cost) {
+				spotsToModify.Add (spot);
+			}
+		}
+
+		return spotsToModify;
+	}
+
+	//used at start, after setting position of the robot
+	public void UpdateSpotsInRange(){
+		List<Spot> visibleSpots = GetVisibleSpots ();
+
+		foreach (Spot visibleSpot in visibleSpots) {
+			visibleSpot.cost = Environment.env.values [visibleSpot.x, visibleSpot.y].cost;
+			visibleSpot.SetColor ();
+		}
 	}
 }

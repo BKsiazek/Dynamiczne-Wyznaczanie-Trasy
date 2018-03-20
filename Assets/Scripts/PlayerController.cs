@@ -5,14 +5,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public static PlayerController player;
+	[HideInInspector]
 	public Spot currentRobotSpot;
 	public float secondsBetweenMoves = 1f;
+	[HideInInspector]
+	public PathController pathCtrl;
 
 	void Start(){
 		player = this;
+		pathCtrl = GetComponent<PathController> ();
 	}
 
-	void Update () {
+	void Update (){
 
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			MakeNextMove ();
@@ -22,23 +26,25 @@ public class PlayerController : MonoBehaviour {
 			StartCoroutine (StartTraversing());
 	}
 
-	//TODO TYLKO TO NIEJASNE
 	public void MakeNextMove(){
 
 		if (currentRobotSpot == DStar._this.goal)
 			return;
 
-		//SimpleMap.map.ActualizeVisibleFragment ();
-
-		GetComponent<PathController> ().CheckSurroundings ();
+		pathCtrl.CheckSurroundings ();
 
 		currentRobotSpot = currentRobotSpot.b;
 		MoveToSpot (currentRobotSpot);
 
-		DStar._this.SaveActualizedPath();
-		GetComponent<PathController> ().ShowPath ();
+		//TEST
+		currentRobotSpot.visited = true;
+		currentRobotSpot.SetColor ();
 
-		SimpleMap.map.ActualizeVisibleFragment ();
+		//aktualizacja listy spotów path z DStar
+		DStar._this.SaveActualizedPath();
+
+		//pokazuje nową ścieżkę z kółek
+		pathCtrl.ShowPath ();
 	}
 
 	void MoveToSpot(Spot spot){

@@ -24,9 +24,9 @@ public class DStar : MonoBehaviour {
 			SetStartAndGoal ();
 			SimpleMap.map.SetSpotsColor ();
 			PlayerController.player.SetPlayerOnStartPoint ();
-			SimpleMap.map.ActualizeVisibleFragment ();
+			PlayerController.player.pathCtrl.UpdateSpotsInRange ();
 			RunDStar();
-			PlayerController.player.GetComponent<PathController> ().ShowPath ();
+			PlayerController.player.pathCtrl.ShowPath ();
 		}
 
 		if (Input.GetKeyDown (KeyCode.F2))
@@ -51,7 +51,7 @@ public class DStar : MonoBehaviour {
 		CLOSEDSet.Clear ();
 		path.Clear ();
 
-		PlayerController.player.GetComponent<PathController> ().Reset ();
+		PlayerController.player.pathCtrl.DestroyPath ();
 
 		SetStartAndGoal ();		//if there is other method of choosing these spots
 	}
@@ -200,10 +200,8 @@ public class DStar : MonoBehaviour {
 	}
 
 	public void OnMapModified(Spot modified){
-		//TODO odkomentarzować
-		//Spot robotPos = PlayerController.player.currentRobotSpot;
 
-		ModifyCost (modified, 1000f);
+		ModifyCost (modified, Environment.env.values [modified.x, modified.y].cost);
 
 		float kmin;
 
@@ -212,21 +210,14 @@ public class DStar : MonoBehaviour {
 		} while(modified.k < modified.h && kmin != -1f);
 
 		SimpleMap.map.SetSpotsColor ();
-		//TODO odkomentarzować
-		//SaveAndShowPath(robotPos);
-
 	}
 
 	//traversing cost from Y to X
 	public float ArcCostXY(Spot to, Spot from){	
 		//TODO check diagonals
-		//Debug.Log ("From cost: " + from.cost);
 		//if (to.x == from.x || to.y == from.y)
 			return 1f + from.cost;
 		//else return 1.4f * from.cost;
-
-		//TODO spróbować mnożyć
-
 
 		//poprawna wersja bez diagonali
 		//return 1f + from.cost;
